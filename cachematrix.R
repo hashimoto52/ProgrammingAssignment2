@@ -1,15 +1,40 @@
-## Put comments here that give an overall description of what your
-## functions do
+## R Programming Week2 Assignment
+##
+## makeCacheMatrix creats a list that store a matrix (x)
+## and its inverse. 
+## cacheSolve returns x's inverse stored in the list
+## that created by makeCacheMatrix.
 
-## Write a short comment describing this function
+## makeCacheMatrix makes a list contains x (x is a matrix)
+## and its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
+        inv <- NULL
+        set <- function(y) {
+                x <<- y
+                inv <<- NULL
+        }
+        get <- function() x
+        setSolve <- function(solve) inv <<- solve
+        getSolve <- function() inv
+        list(set = set, get = get,
+             setSolve = setSolve,
+             getSolve = getSolve)
 
 }
 
 
-## Write a short comment describing this function
+## cacheSolve returns inverse from a list that
+## makeCacheMatrix make.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        inv <- x$getSolve()
+        if(!is.null(inv)) {
+                message("getting cached data")
+                return(inv)
+        }
+        data <- x$get()
+        inv <- solve(data, ...)
+        x$setSolve(inv)
+        inv
 }
